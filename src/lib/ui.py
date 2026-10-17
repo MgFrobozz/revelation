@@ -260,6 +260,16 @@ class ImageLabel(Gtk.Box):
 
         self.label.set_text(text)
 
+    def set_selectable(self, selectable):
+        "Sets whether the label is selectable"
+
+        self.label.set_selectable(selectable)
+
+    def get_selectable(self):
+        "Returns whether the label is selectable"
+
+        return self.label.get_selectable()
+
 
 class Label(Gtk.Label):
     "A text label"
@@ -1142,11 +1152,13 @@ class EntryView(Gtk.Box):
             "<span size=\"large\" weight=\"bold\">%s</span>" % util.escape_markup(e.name),
             e.icon, ICON_SIZE_DATAVIEW
         )
+        label.set_selectable(True)
         label.set_halign(Gtk.Align.CENTER)
         label.set_valign(Gtk.Align.CENTER)
         metabox.pack_start(label, True, True, 0)
 
         label = Label("<span weight=\"bold\">%s</span>%s" % (e.typename + (e.description != "" and ": " or ""), util.escape_markup(e.description)), Gtk.Justification.CENTER)
+        label.set_selectable(True)
         metabox.pack_start(label, True, True, 0)
 
         # set up field list
@@ -1170,6 +1182,7 @@ class EntryView(Gtk.Box):
         # notes
         label = Label("<span weight=\"bold\">%s</span>%s" % ((e.notes != "" and _("Notes: ") or ""),
                                                              util.escape_markup(e.notes)), Gtk.Justification.LEFT)
+        label.set_selectable(True)
         self.pack_start(label)
 
         # display updatetime
