@@ -377,14 +377,21 @@ class PasswordLabel(Gtk.EventBox):
 class EditableTextView(Gtk.ScrolledWindow):
     "An editable text view"
 
-    def __init__(self, buffer = None, text = None):
+    def __init__(self, buffer = None, text = None, lines = 5):
 
         Gtk.ScrolledWindow.__init__(self)
         self.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         self.set_shadow_type(Gtk.ShadowType.ETCHED_OUT)
+        self.set_overlay_scrolling(False)
+
         self.textview = Gtk.TextView(buffer=buffer)
+        self.textview.set_wrap_mode(Gtk.WrapMode.WORD_CHAR)
         self.textbuffer = self.textview.get_buffer()
         self.add(self.textview)
+
+        if lines > 0:
+            layout = self.textview.create_pango_layout("\n".join(["A"] * lines))
+            self.set_min_content_height(layout.get_pixel_size()[1])
 
         if text is not None:
             self.textview.get_buffer().set_text(text)
@@ -392,10 +399,7 @@ class EditableTextView(Gtk.ScrolledWindow):
     def set_text(self, text):
         "Sets the entry contents"
 
-        if text is None:
-            self.textbuffer.set_text("")
-
-        self.textbuffer.set_text(text)
+        self.textbuffer.set_text(text or "")
 
     def get_text(self):
         "Returns the text of the entry"
