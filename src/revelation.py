@@ -28,19 +28,6 @@ import os
 import pwd
 import sys
 import urllib.parse
-
-# Ensure local installation prefix lib directory is in sys.path
-_bindir = os.path.dirname(os.path.realpath(__file__))
-_prefix = os.path.normpath(os.path.join(_bindir, ".."))
-for _libdir in [
-    os.path.join(_prefix, "lib", f"python{sys.version_info.major}", "dist-packages"),
-    os.path.join(_prefix, "lib", f"python{sys.version_info.major}.{sys.version_info.minor}", "dist-packages"),
-    os.path.join(_prefix, "lib", f"python{sys.version_info.major}", "site-packages"),
-    os.path.join(_prefix, "lib", f"python{sys.version_info.major}.{sys.version_info.minor}", "site-packages"),
-]:
-    if os.path.isdir(_libdir) and _libdir not in sys.path:
-        sys.path.insert(0, _libdir)
-
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, Gio, GLib  # noqa: E402
