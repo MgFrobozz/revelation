@@ -4,6 +4,7 @@
 ABOUT-NLS
 Makefile
 INSTALL
+__pycache__/
 aclocal.m4
 autom4te.cache/
 compile
